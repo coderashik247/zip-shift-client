@@ -1,15 +1,25 @@
 import React from "react";
 import Logo from "../../../components/Logo";
 import { GoArrowUpRight } from "react-icons/go";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
   const links = (
     <>
       <li>
-        <a>Item 1</a>
+        <NavLink to="">Services</NavLink>
       </li>
       <li>
-        <a>Item 3</a>
+        <NavLink to="/coverage">Coverage</NavLink>
+      </li>
+      <li>
+        <NavLink to="">About Us</NavLink>
+      </li>
+      <li>
+        <NavLink to="">Pricing</NavLink>
+      </li>
+      <li>
+        <NavLink to="">Be a Rider</NavLink>
       </li>
     </>
   );
@@ -49,10 +59,19 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-3 text-accent">
-        <a className="px-5 py-1.5 border rounded-lg" href="">Sign In</a>
-        <a href="" className="px-5 py-1.5 border rounded-lg bg-primary">Be a rider</a>
-        <a href="" className="h-10 w-10 rounded-full border flex justify-center
-         items-center bg-black text-primary"><GoArrowUpRight style={{ strokeWidth: 1 }} size={30} /></a>
+        <a className="px-5 py-1.5 border rounded-lg" href="">
+          Sign In
+        </a>
+        <a href="" className="px-5 py-1.5 border rounded-lg bg-primary">
+          Be a rider
+        </a>
+        <a
+          href=""
+          className="h-10 w-10 rounded-full border flex justify-center
+         items-center bg-black text-primary"
+        >
+          <GoArrowUpRight style={{ strokeWidth: 1 }} size={30} />
+        </a>
       </div>
     </div>
   );
