@@ -1,10 +1,21 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import { Link } from "react-router";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
   const { register, handleSubmit, formState: {errors} } = useForm();
+  const {registerUser} = useAuth();
   const handleRegisteration = (data) => {
     console.log("after register", data);
+    registerUser(data.email, data.password)
+    .then(result =>{
+      console.log(result);
+    })
+    .then(error =>{
+      console.log(error);
+    })
   };
   return (
     <div className="card bg-base-100 w-full mx-auto max-w-lg p-8 shrink-0 shadow-2xl">
@@ -42,14 +53,13 @@ const Register = () => {
           {
             errors.password?.type ==='pattern' && <p>Password must have at least one uppercase, at least one lowercase, at least one number, and at least one special characters</p>
           }
-          <div>
-            <a className="link link-hover">Forgot password?</a>
-          </div>
           <button className="btn btn-primary text-black font-bold mt-4">
             Register
           </button>
         </fieldset>
+        <p className="text-accent">New to Zap Shift <Link to="/login" className="font-bold underline text-primary">Login</Link> </p>
       </form>
+      <SocialLogin></SocialLogin>
     </div>
   );
 };
