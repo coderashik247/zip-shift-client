@@ -1,9 +1,20 @@
 import React from "react";
 import Logo from "../../../components/Logo";
 import { GoArrowUpRight } from "react-icons/go";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const links = (
     <>
       <li>
@@ -59,12 +70,26 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-3 text-accent">
-        <a className="px-5 py-1.5 border rounded-lg" href="">
-          Sign In
-        </a>
-        <a href="" className="px-5 py-1.5 border rounded-lg bg-primary">
+        {user ? (
+          <button
+            onClick={handleLogOut}
+            className="w-10 h-10 rounded-full border"
+          >
+            <img
+              src={user?.photoURL || "/default-user.png"}
+              className="w-10 h-10 rounded-full"
+              alt=""
+            />
+            
+          </button>
+        ) : (
+          <Link to="/login" className="px-5 py-1.5 border rounded-lg" href="">
+            Sign In
+          </Link>
+        )}
+        <Link to="/rider" href="" className="px-5 py-1.5 border rounded-lg bg-primary">
           Be a rider
-        </a>
+        </Link>
         <a
           href=""
           className="h-10 w-10 rounded-full border flex justify-center
