@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaMagnifyingGlass, FaTrashCan } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -32,7 +33,7 @@ const MyParcels = () => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/parcels/${id}`).then((res) => {
           console.log(res.data);
-            refetch();
+          refetch();
           Swal.fire({
             title: "Deleted!",
             text: "Your parcel has been deleted.",
@@ -42,6 +43,23 @@ const MyParcels = () => {
       }
     });
   };
+
+  const handlePayment = async (parcel) => {
+    const paymentInfo = {
+      cost: parcel.cost,
+      parcelId: parcel._id,
+      senderEmail: parcel.senderEmail,
+      parcelName: parcel.parcelName,
+    };
+    const res = await axiosSecure.post(
+      "/payment-checkout-session",
+      paymentInfo
+    );
+
+    console.log(res.data.url);
+    window.location.assign(res.data.url);
+  };
+
   return (
     <div className="text-secondary">
       <h2>My parcels Layouts {parcels.length} </h2>
@@ -54,6 +72,7 @@ const MyParcels = () => {
               <th>Name</th>
               <th>Receiver Name</th>
               <th>Cost</th>
+              <th>Payment</th>
               <th>Delivery Status</th>
               <th>Actions</th>
             </tr>
@@ -67,7 +86,22 @@ const MyParcels = () => {
                 <td>{parcel.parcelName}</td>
                 <td>{parcel.receiverName}</td>
                 <td>{parcel.cost}</td>
-                <td>Blue</td>
+                <td>
+                  {parcel.paymentStatus === "paid" ? (
+                    <span className="text-green-400">Paid</span>
+                  ) : (
+                    // <Link to={`/dashboard/payment/${parcel._id}`}>
+                    // <button className="btn btn-sm btn-primary text-black">Pay</button>
+                    // </Link>
+                    <button
+                      onClick={() => handlePayment(parcel)}
+                      className="btn btn-sm btn-primary text-black"
+                    >
+                      Pay
+                    </button>
+                  )}
+                </td>
+                <td>{parcel.deliveryStatus}</td>
                 <td>
                   <button className="btn btn-square hover:bg-primary">
                     <FaMagnifyingGlass />
