@@ -78,7 +78,7 @@ const Navbar = () => {
         {user ? (
           <button
             onClick={handleLogOut}
-            className="w-10 h-10 rounded-full border"
+            className="w-10 h-10 rounded-full border overflow-hidden"
           >
             <img
               src={user?.photoURL || "/default-user.png"}
