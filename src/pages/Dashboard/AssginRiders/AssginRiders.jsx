@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React, {  useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
 const AssginRiders = () => {
   const axiosSecure = useAxiosSecure();
   const riderModalRef = useRef();
-  const [selectedParcel, setSelectedParcel] = useState([]);
+  const [selectedParcel, setSelectedParcel] = useState(null);
+  console.log(selectedParcel);
 
-  const { data: parcels = [], refetch:parcelsRefetch } = useQuery({
+  const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
     queryKey: ["parcels", "pending-pick"],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -19,11 +20,11 @@ const AssginRiders = () => {
   });
 
   const { data: riders = [] } = useQuery({
-    queryKey: ["riders", "available", selectedParcel.senderDistrict],
+    queryKey: ["riders", "available", selectedParcel?.senderDistrict],
     enabled: !!selectedParcel,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/riders?status=approved&workStatus=available&district=${selectedParcel.senderDistrict}`
+        `/riders?status=approved&workStatus=available&district=${selectedParcel?.senderDistrict}`
       );
       return res.data;
     },

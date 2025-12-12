@@ -1,13 +1,13 @@
 import React from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
-import { FaMotorcycle, FaRegCreditCard, FaUser } from "react-icons/fa";
+import { FaMotorcycle, FaRegCreditCard, FaTasks, FaUser } from "react-icons/fa";
 import { Link, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
 import { RiEBikeFill } from "react-icons/ri";
 
 const DashboardLayouts = () => {
   const { role } = useRole();
-  console.log('in the dashboard', role);
+  console.log("in the dashboard", role);
   return (
     <div className="drawer lg:drawer-open container mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -96,6 +96,25 @@ const DashboardLayouts = () => {
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
+
+            {/* Riders Routes Only */}
+            {role === "rider" && (
+              <>
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Assigned Deliveries"
+                    to="/dashboard/assigned-deliveries"
+                  >
+                    <FaTasks />
+                    <span className="is-drawer-close:hidden">
+                      Assigned Deliveries
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {/* Admin Routes Only */}
             {role === "admin" && (
               <>
                 <li>
