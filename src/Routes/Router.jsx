@@ -20,92 +20,133 @@ import AdminRoute from "./AdminRoute";
 import AssginRiders from "../pages/Dashboard/AssginRiders/AssginRiders";
 import RiderRoute from "./RiderRoute";
 import AssignDeliveries from "../pages/Dashboard/Assignedeliveries/AssignDeliveries";
+import CompletedDeliveries from "../pages/Dashboard/CompleteDeliveries/CompleteDeliveries";
 
 export const router = createBrowserRouter([
-    {
-        path:"/",
-        element: <MainLayouts></MainLayouts>,
-        children:[
-            {
-                path:"/",
-                element: <Home></Home>
-            },
-            {
-                path:"rider",
-                element: <PrivateRoute> <Rider></Rider> </PrivateRoute>,
-                loader: () => fetch('/serviceCenters.json').then(res => res.json())
-            },
-            {
-                path:"send-parcel",
-                element: <PrivateRoute> <SendParcel></SendParcel> </PrivateRoute>,
-                loader: () => fetch('/serviceCenters.json').then(res => res.json())
-            },
-            {
-                path:"coverage",
-                element: <Coverage></Coverage>,
-                loader: () => fetch('/serviceCenters.json').then(res => res.json())
-            }
-        ]
-    },
-    {
-        path:"/",
-        Component: AuthLayouts,
-        children:[
-            {
-                path:'login',
-                Component: Login
-            },
-            {
-                path:'register',
-                Component: Register
-            }
-        ]
-    },
-    {
-        path:'dashboard',
-        element: <PrivateRoute> <DashboardLayouts></DashboardLayouts> </PrivateRoute>,
-        children:[
-            {
-                path:'my-parcels',
-                Component: MyParcels,
-            },
-            {
-                path:'payment/:parcelId',
-                Component: Payment
-            },
-            {
-                path:'payment-history',
-                Component: PaymentHistory,
-            },
-            {
-                path:'payment-success',
-                Component: PaymentSuccess,
-            },
-            {
-                path:'payment-cancelled',
-                Component: PaymentCancelled,
-            },
-            {
-                path:'approve-riders',
-                element: <AdminRoute> <ApproveRiders></ApproveRiders> </AdminRoute>
-            },
-            {
-                path:'assigned-deliveries',
-                element: <RiderRoute>
-                    <AssignDeliveries></AssignDeliveries>
-                </RiderRoute>
-            },
-            // Admin Routes Only
-            {
-                path:'assgin-riders',
-                element: <AdminRoute> <AssginRiders></AssginRiders> </AdminRoute>
-            },
-            {
-                path:"users-management",
-                // Component: UserManagement
-                element: <AdminRoute> <UserManagement></UserManagement> </AdminRoute>
-            }
-        ]
-    }
-])
-                                    
+  {
+    path: "/",
+    element: <MainLayouts></MainLayouts>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "rider",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Rider></Rider>{" "}
+          </PrivateRoute>
+        ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "send-parcel",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <SendParcel></SendParcel>{" "}
+          </PrivateRoute>
+        ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "coverage",
+        element: <Coverage></Coverage>,
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+    ],
+  },
+  {
+    path: "/",
+    Component: AuthLayouts,
+    children: [
+      {
+        path: "login",
+        Component: Login,
+      },
+      {
+        path: "register",
+        Component: Register,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        {" "}
+        <DashboardLayouts></DashboardLayouts>{" "}
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "my-parcels",
+        Component: MyParcels,
+      },
+      {
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancelled,
+      },
+      {
+        path: "approve-riders",
+        element: (
+          <AdminRoute>
+            {" "}
+            <ApproveRiders></ApproveRiders>{" "}
+          </AdminRoute>
+        ),
+      },
+      // Rider Routes Only
+      {
+        path: "assigned-deliveries",
+        element: (
+          <RiderRoute>
+            <AssignDeliveries></AssignDeliveries>
+          </RiderRoute>
+        ),
+      },
+      {
+        path: "completed-deliveries",
+        element: (
+          <RiderRoute>
+            <CompletedDeliveries></CompletedDeliveries>
+          </RiderRoute>
+        ),
+      },
+      // Admin Routes Only
+      {
+        path: "assgin-riders",
+        element: (
+          <AdminRoute>
+            {" "}
+            <AssginRiders></AssginRiders>{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "users-management",
+        // Component: UserManagement
+        element: (
+          <AdminRoute>
+            {" "}
+            <UserManagement></UserManagement>{" "}
+          </AdminRoute>
+        ),
+      },
+    ],
+  },
+]);
